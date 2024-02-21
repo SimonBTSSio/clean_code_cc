@@ -60,6 +60,11 @@ module.exports = function CardService() {
     },
     delete: async (filters) => {
       return Card.destroy({ where: filters });
+    },
+    getNextCategory: function (currentCategory) {
+      const categories = ['FIRST', 'SECOND', 'THIRD', 'FOURTH', 'FIFTH', 'SIXTH', 'SEVENTH'];
+      const currentIndex = categories.indexOf(currentCategory);
+      return categories[currentIndex + 1];
     }
   }
 };

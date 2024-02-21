@@ -30,7 +30,7 @@ Démmarer le front
 ```bash
   npm run dev
 ```
-Le client est bien fonctionnel et accessible à partir de http://localhost:5173/
+Le client est bien fonctionnel et accessible à partir de http://localhost:3000/
 ## Membres du groupe
 
 - [@Ayman-BEDDA](https://github.com/Ayman-BEDDA)

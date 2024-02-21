@@ -9,7 +9,8 @@ const NotificationRouter = require("./routes/notification");
 const QuizRouter = require("./routes/quiz");
 const TagRouter = require("./routes/tag");
 const cors = require("cors");
-const port = 8000;
+const defaultPort = 8000;
+const port = process.env.NODE_ENV === 'test' ? (process.env.TEST_PORT || 5000) : (process.env.PORT || defaultPort);
 
 
 const app = express();
