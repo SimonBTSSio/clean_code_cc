@@ -9,7 +9,7 @@ const NotificationRouter = require("./routes/notification");
 const QuizRouter = require("./routes/quiz");
 const TagRouter = require("./routes/tag");
 const cors = require("cors");
-const port = 3000;
+const port = 8000;
 
 
 const app = express();
