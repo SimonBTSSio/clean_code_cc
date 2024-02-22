@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import {useNavigate} from "react-router-dom";
+import AuthService from '../services/AuthService.js';
 
 const Register = () => {
     const [email, setEmail] = useState('');
@@ -19,25 +20,10 @@ const Register = () => {
         e.preventDefault();
 
         try {
-            const response = await fetch('http://localhost:8000/register', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ email, password }),
-            });
-
-            if (!response.ok) {
-                throw new Error('Erreur lors de la requête.');
-            }
-
-            const data = await response.json();
-
-            console.log('Réponse du serveur:', data);
-
+            await AuthService.register(email, password);
             setEmail('');
             setPassword('');
-            navigate('/login')
+            navigate('/login');
         } catch (error) {
             console.error('Erreur lors de l\'inscription :', error.message);
         }

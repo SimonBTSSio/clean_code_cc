@@ -13,6 +13,7 @@ const Home = () => {
                     <h1>Welcome to the Home Page!</h1>
                 </div>
                 <button onClick={() => navigate('/register')}>Créer un compte</button>
+                <button onClick={() => navigate('/login')}>Connectez-vous</button>
             </>) : <HomeUser />
     );
 };

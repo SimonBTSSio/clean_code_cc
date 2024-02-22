@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import {useNavigate} from "react-router-dom";
+import AuthService from "../services/AuthService.js";
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -19,27 +20,10 @@ const Login = () => {
         e.preventDefault();
 
         try {
-            const response = await fetch('http://localhost:8000/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ email, password }),
-            });
-
-            if (!response.ok) {
-                throw new Error('Erreur lors de la requête.');
-            }
-
-            const data = await response.json();
-
-            localStorage.setItem('token', data.token);
-
-
+            await AuthService.login(email, password);
             setEmail('');
             setPassword('');
-            navigate('/')
-
+            navigate('/');
         } catch (error) {
             console.error('Erreur lors de la connexion :', error.message);
         }
