@@ -1,16 +1,18 @@
+const {DataTypes} = require("sequelize");
 module.exports = (connection) => {
     const { DataTypes, Model } = require("sequelize");
     const User = require("./user")(connection);
+    const Tag = require("./tag")(connection);
 
     class Card extends Model {}
   
     Card.init(
       {
-        id: {
-          type: DataTypes.UUID,
-          defaultValue: DataTypes.UUIDV4,
-          primaryKey: true,
-        },
+          id: {
+              type: DataTypes.INTEGER,
+              primaryKey: true,
+              autoIncrement: true
+          },
         question: {
           type: DataTypes.TEXT,
           allowNull: false,
@@ -31,10 +33,13 @@ module.exports = (connection) => {
             key: 'id',
           },
         },
-        tag: {
-          type: DataTypes.STRING,
-          allowNull: true,
-        },
+          tagId: {
+              type: DataTypes.INTEGER,
+              references: {
+                  model: 'tags',
+                  key: 'id',
+              },
+          },
       },
       {
         sequelize: connection,
@@ -44,6 +49,9 @@ module.exports = (connection) => {
 
     Card.belongsTo(User);
     User.hasMany(Card);
+
+    Card.belongsTo(Tag);
+    Tag.hasMany(Card);
   
     return Card;
   };
