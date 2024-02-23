@@ -31,6 +31,9 @@ Démmarer le front
   npm run dev
 ```
 Le client est bien fonctionnel et accessible à partir de http://localhost:3000/
+## Schémas
+Les schémas du projet ce trouve dans le fichier du même nom à la racine
+
 ## Membres du groupe
 
 - [@Ayman-BEDDA](https://github.com/Ayman-BEDDA)
