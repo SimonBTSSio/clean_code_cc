@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState} from "react";
 import CardService from "../../services/CardService.js";
+import moment from "moment";
 
 const CardDetails = () => {
     const [card, setCard] = useState({});
@@ -8,6 +9,7 @@ const CardDetails = () => {
     const id = useParams().id;
     const [success, setSuccess] = useState('');
     const [error, setError] = useState('');
+    const [submitted, setSubmitted] = useState(false);
 
     useEffect(() => {
         CardService.getCard(id).then((response) => {
@@ -15,22 +17,44 @@ const CardDetails = () => {
         });
     }, [id]);
 
+    const updatedAtMoment = moment(card.updatedAt);
+    const currentMoment = moment();
+
+    const isOneDayPassed = useMemo(() => {
+        return currentMoment.diff(updatedAtMoment, 'days') > 0;
+    }, [currentMoment, updatedAtMoment]);
+
+    const isCardAnswered = useMemo(() => {
+        return card.category !== "FIRST" && !isOneDayPassed;
+    }, [card.category, isOneDayPassed]);
+
     const handleAnswerChange = (e) => {
         setUserAnswer(e.target.value);
     };
 
     const handleSubmit = () => {
-        if (userAnswer === card.answer) {
-            setSuccess("Bonne réponse !");
-            setError("")
-            CardService.answerCard(id, true);
+        if (isCardAnswered) {
+            if (userAnswer === card.answer) {
+                setSuccess("Bonne réponse !");
+                setError("")
+                CardService.answerCard(id, true);
+            } else {
+                setError("Mauvaise réponse ! La bonne réponse est : " + card.answer);
+                setSuccess("")
+                CardService.answerCard(id, false);
+            }
+            setUserAnswer("");
+            setSubmitted(true);
         } else {
-            setError("Mauvaise réponse !");
-            setSuccess("")
-            CardService.answerCard(id, false);
+            setError("Vous avez déjà répondu à cette question aujourd'hui !");
         }
-        setUserAnswer("");
     };
+
+    const handleForceSubmit = () => {
+        CardService.answerCard(id, true);
+        setSuccess("Votre fiche est passé à la catégorie supérieur !");
+
+    }
 
     return (
         <div className="card-details">
@@ -46,6 +70,16 @@ const CardDetails = () => {
                 />
             </label>
             <button onClick={handleSubmit}>Soumettre</button>
+            {
+                submitted ? (
+                    <div>
+                        <p>
+                            Vous voulez quand même valider la fiche ?
+                        </p>
+                        <button onClick={handleForceSubmit}>Forcer validation</button>
+                    </div>
+                ) : null
+            }
         </div>
     );
 };

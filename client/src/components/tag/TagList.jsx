@@ -24,9 +24,10 @@ const TagList = () => {
     return (
         <div>
             <button onClick={() => navigate('/create-tag')}>Créer un tag</button>
+            <button onClick={() => navigate('/create-card')}>Créer une fiche</button>
             <h2>Tag List</h2>
             {tags.length ? tags.map((tag) => (
-                <p className='tag' key={tag.id}>{tag.name}</p>
+                <p className='tag' key={tag.id} onClick={ ()=> navigate(`/cards-by-tag/${tag.id}`) }>{tag.name}</p>
             )) : <p>Aucun tag</p>}
         </div>
     );

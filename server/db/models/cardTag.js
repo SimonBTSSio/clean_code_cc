@@ -13,7 +13,7 @@ module.exports = (connection) => {
           autoIncrement: true
       },
       cardId: {
-        type: DataTypes.UUID,
+        type: DataTypes.INTEGER,
         references: {
           model: 'cards',
           key: 'id',

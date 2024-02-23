@@ -13,6 +13,8 @@ export default class AuthService {
       localStorage.setItem('token', data.token);
       localStorage.setItem('userId', data.user.id);
 
+      console.log(data.user.id)
+
       if (!response.ok) {
       throw new Error(data.message);
     }

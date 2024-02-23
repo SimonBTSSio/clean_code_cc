@@ -119,6 +119,7 @@ button {
   color: white;  font-weight: bold;
   border: #000066 1px solid;
   border-radius: 5px;
+  cursor: pointer;
 }
 
 .card-details {

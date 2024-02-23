@@ -71,4 +71,21 @@ export default class CardService {
         }
         return data;
     }
+
+    static async updateCategory(cardId) {
+        const response = await fetch(`http://localhost:8000/cards/${cardId}/category`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`,
+            },
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.message);
+        }
+        return data;
+    }
 }

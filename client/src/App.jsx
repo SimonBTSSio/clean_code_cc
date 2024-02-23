@@ -8,6 +8,7 @@ import CreateCard from "./components/card/CreateCard.jsx";
 import CreateTag from "./components/tag/CreateTag.jsx";
 import TagList from "./components/tag/TagList.jsx";
 import CardDetails from "./components/card/CardDetails.jsx";
+import CardByTag from "./components/card/CardByTag.jsx";
 
 function App() {
 
@@ -22,6 +23,7 @@ function App() {
               <Route path="/create-tag" element={<CreateTag />} />
               <Route path="/tags" element={<TagList />} />
               <Route path="/cards/:id" element={<CardDetails />} />
+              <Route path="/cards-by-tag/:id" element={<CardByTag />} />
             </Routes>
         </Router>
   )

@@ -9,7 +9,7 @@ const CardList = () => {
 
     useEffect( () => {
         CardService.getCards().then((response) => {
-            setCards(response);
+            setCards(response.filter(card => card.category !== 'DONE'));
         });
     }, []);
 
