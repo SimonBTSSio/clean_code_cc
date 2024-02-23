@@ -1,14 +1,31 @@
 const request = require('supertest');
 const app = require('../server.js');
+const Sequelize = require("sequelize");
+const card = require('../controllers/card.js');
 
 describe('CardController', () => {
-  let cardId;
+  let cardId; 
 
-  // Créer une carte
+  beforeAll(async () => {
+    const newCard = {
+      question: 'What is a test?',
+      answer: 'a test is a test',
+      userId: 1
+    };
+
+    const response = await request(app)
+      .post('/cards')
+      .send(newCard);
+
+    expect(response.statusCode).toBe(201);
+    cardId = response.body.id;
+  });
+
+  console.log(cardId);
   it('should create a new card', async () => {
     const newCard = {
-      question: 'What is Node.js?',
-      answer: 'Node.js is a JavaScript runtime built on Chrome\'s V8 JavaScript engine.',
+      question: 'What is Muthu?',
+      answer: 'Muthu is a professional developer.',
       userId: 1
     };
     
@@ -17,7 +34,6 @@ describe('CardController', () => {
       .send(newCard);
 
     expect(response.statusCode).toBe(201);
-    cardId = response.body.id;
   });
 
   it('should get all cards', async () => {
